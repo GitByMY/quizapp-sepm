@@ -50,32 +50,50 @@ let questions1 = [
 
 let questions2 = [
     {
-        question: "What is Kyria's favorite video game?",
+        question: "When did 4th of July celebrations first use fireworks?",
         answers: [
-            {text: "Trails in the Sky the 3rd", correct: true},
-            {text: "Fire Emblem: Genealogy of the Holy War", correct: false},
-            {text: "Persona 3 Portable", correct: false},
-            {text: "Xenoblade Chronicles 3", correct: false},
+            {text: "1777", correct: true},
+            {text: "1799", correct: false},
+            {text: "1873", correct: false},
+            {text: "1800", correct: false},
         ]
     },
     {
-        question: "What instrument does Kyria play?",
+        question: "How many signatures are on the declaration of independence?",
         answers: [
-            {text: "Viola", correct: true},
-            {text: "Violin", correct: false},
-            {text: "Cello", correct: false},
-            {text: "Trumpet", correct: false},
+            {text: "50", correct: false},
+            {text: "49", correct: false},
+            {text: "13", correct: false},
+            {text: "56", correct: true},
         ]
     },
     {
-        question: "What is Kyria's favorite color?",
+        question: "What year did \"The Star-Spangled Banner\" become the national anthem?",
         answers: [
-            {text: "Royal Blue", correct: true},
-            {text: "Sky Blue", correct: false},
-            {text: "Pink", correct: false},
-            {text: "Navy Blue", correct: false},
+            {text: "1900", correct: false},
+            {text: "1922", correct: false},
+            {text: "1931", correct: true},
+            {text: "1870", correct: false},
         ]
     },
+    {
+        question: "How many presidents have died in office?",
+        answers: [
+            {text: "8", correct: true},
+            {text: "10", correct: false},
+            {text: "5", correct: false},
+            {text: "9", correct: false},
+        ]
+    },
+    {
+        question: "After which battle did General Robert E. Lee surrender to General Ulysses S. Grant, leading to the end of the Civil War?",
+        answers: [
+            {text: "Battle of Gettysburg", correct: false},
+            {text: "Battle of Appomattox Court House", correct: true},
+            {text: "Battle of Saratoga", correct: false},
+            {text: "Siege of Charleston", correct: false},
+        ]
+    }
 ]
 
 
