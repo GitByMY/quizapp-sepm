@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="eng-us">
+    <head>
+        <title>Inquizitive</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="google" content="notranslate"/>
+        <link href="style.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/e7cbdcad98.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="main-body" onload="changeBackground()">
+        <main id="main">
+            <h1>Inquizitive</h1>
+            <div class="quiz-selection">
+                <select id="quiz-select">
+                    <option value="" disabled selected>Select quiz</option>
+                    <option value="comp-sci">Computer Science</option>
+                    <option value="buddy-meter">Kyria's Buddy Meter</option>
+                </select>
+            </div>
+            <button id="btn" onclick="startQuiz(getSelectedIndex())">Start Quiz</button>
+        </main>
+        <div class="app" id="app">
+            <i class="fa-solid fa-arrow-left-long fa-xl" onclick="returnHome()"></i>
+            <h1>Quiz</h1>
+            <div class="quiz">
+                <h2 id="question">Question goes here</h2>
+                <div id="answer-buttons">
+                    <button class="btn">Answer 1</button>
+                    <button class="btn">Answer 2</button>
+                    <button class="btn">Answer 3</button>
+                    <button class="btn">Answer 4</button>
+                </div>
+                <button id="next-btn">Next</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
