@@ -206,6 +206,7 @@ function changeBackground() {
         hexColor += hex[getRandomNumber()];
     }
     document.body.style.backgroundColor = hexColor;
+    const themeColor = document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hexColor);
 };
 
 // Return to home screen
