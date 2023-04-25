@@ -114,8 +114,12 @@ let score = 0;
 
 function getSelectedIndex() {
     const quizSelection = document.getElementById("quiz-select");
-    const selectedIndex = quizSelection.selectedIndex;
-    return selectedIndex;
+    if (quizSelection.selectedIndex == quizSelection.disabled) {
+
+    } else {
+        const selectedIndex = quizSelection.selectedIndex;
+        return selectedIndex;
+    }
 };
 
 function getQuestions(selectedIndex) {
