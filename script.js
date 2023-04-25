@@ -215,7 +215,6 @@ function returnHome() {
     main.style.display = "block";
     const quizSelection = document.getElementById("quiz-select");
     quizSelection.selectedIndex = quizSelection.disabled;
-    
 }
 
 
