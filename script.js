@@ -101,11 +101,13 @@ let questions2 = [
 
 const hex = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
 const app = document.getElementById("app");
-const main = document.getElementById("main")
+const main = document.getElementById("main");
+const quizSelection = document.getElementById("quiz-select");
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
 const startQuizBtn = document.querySelector("#btn");
+let quizHeader = document.getElementById("quiz-header");
 let questions = null;
 let currentQuestionIndex = 0;
 let score = 0;
@@ -113,35 +115,23 @@ let score = 0;
 // Select quiz
 
 function getSelectedIndex() {
-    const quizSelection = document.getElementById("quiz-select");
-    if (quizSelection.selectedIndex == quizSelection.disabled) {
 
+    if (quizSelection.selectedIndex == quizSelection.disabled) {
+        startQuizBtn = startQuizBtn.disabled
     } else {
-        const selectedIndex = quizSelection.selectedIndex;
-        return selectedIndex;
+        return quizSelection.selectedIndex
     }
 };
 
 function getQuestions(selectedIndex) {
-    if (selectedIndex == 1) {
-        let questions = questions1.map(question => {
-            let quizQuestions = {
-                question: question.question,
-                answers: question.answers
-            };
-            return quizQuestions;
-        });
-        return questions;
-    } else if (selectedIndex == 2) {
-        let questions = questions2.map(question => {
-            let quizQuestions = {
-                question: question.question,
-                answers: question.answers
-            };
-            return quizQuestions;
-        });
-        return questions;
-    }
+    let questions = eval("questions"+selectedIndex).map(question => {
+        let quizQuestions = {
+            question: question.question,
+            answers: question.answers
+        };
+        return quizQuestions;
+    });
+    return questions;
 }
 
 // Start quiz
@@ -149,6 +139,7 @@ function getQuestions(selectedIndex) {
 function startQuiz(selectedIndex) {
     main.style.display = "none";
     app.style.display = "block";
+    quizHeader.innerHTML = quizSelection[selectedIndex].text;
     questions = getQuestions(selectedIndex);
     currentQuestionIndex = 0;
     score = 0;
@@ -161,7 +152,7 @@ function showQuestion(questions) {
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
     let questionNumber = currentQuestionIndex + 1;
-    questionElement.innerHTML = questionNumber + "." + currentQuestion.question;
+    questionElement.innerHTML = questionNumber + ". " + currentQuestion.question;
 
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
@@ -235,6 +226,7 @@ function changeBackground() {
 
 function returnHome() {
     app.style.display = "none";
+    changeBackground();
     main.style.display = "block";
     const quizSelection = document.getElementById("quiz-select");
     quizSelection.selectedIndex = quizSelection.disabled;
