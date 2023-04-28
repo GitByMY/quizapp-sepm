@@ -242,9 +242,7 @@ window.addEventListener("offline", function() {
     this.document.body.innerHTML = "Offline";
 });
 
-window.addEventListener("online", function() {
-    returnHome;
-});
+window.addEventListener("online", returnHome())
 
 changeBackground();
 
