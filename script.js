@@ -112,6 +112,22 @@ let questions = null;
 let currentQuestionIndex = 0;
 let score = 0;
 
+
+// Change background color
+
+function getRandomNumber() {
+    return Math.floor(Math.random() * hex.length);
+}
+
+function changeBackground() {
+    let hexColor = '#';
+    for (let i = 0; i < 6; i++) {
+        hexColor += hex[getRandomNumber()];
+    }
+    document.body.style.backgroundColor = hexColor;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hexColor);
+};
+
 // Select quiz
 
 function getSelectedIndex() {
@@ -207,21 +223,6 @@ function handleNextButton(questions) {
     }
 }
 
-// Change background color
-
-function getRandomNumber() {
-    return Math.floor(Math.random() * hex.length);
-}
-
-function changeBackground() {
-    let hexColor = '#';
-    for (let i = 0; i < 6; i++) {
-        hexColor += hex[getRandomNumber()];
-    }
-    document.body.style.backgroundColor = hexColor;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hexColor);
-};
-
 // Return to home screen
 
 function returnHome() {
@@ -232,6 +233,15 @@ function returnHome() {
     quizSelection.selectedIndex = quizSelection.disabled;
 }
 
+// Check online status
+
+window.addEventListener("online", function() {
+    this.document.body.innerText = "Online";
+});
+
+window.addEventListener("offline", function() {
+    this.document.body.innerText = "Offline";
+});
 
 changeBackground();
 
