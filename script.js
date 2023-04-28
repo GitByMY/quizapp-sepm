@@ -236,11 +236,15 @@ function returnHome() {
 // Check online status
 
 window.addEventListener("online", function() {
-    this.document.body.innerText = "Online";
+    changeBackground();
+    main.style.display = "block";
+    const quizSelection = document.getElementById("quiz-select");
+    quizSelection.selectedIndex = quizSelection.disabled;
 });
 
 window.addEventListener("offline", function() {
     this.document.body.style.backgroundColor = "#000";
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000');
     this.document.body.style.color = "#fff";
     this.document.body.innerHTML = "Offline";
 });
