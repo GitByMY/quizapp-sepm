@@ -240,7 +240,9 @@ window.addEventListener("online", function() {
 });
 
 window.addEventListener("offline", function() {
-    this.document.body.innerText = "Offline";
+    this.document.body.style.backgroundColor = "#000";
+    this.document.body.style.color = "#fff";
+    this.document.body.innerHTML = "Offline";
 });
 
 changeBackground();
