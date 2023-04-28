@@ -236,14 +236,16 @@ function returnHome() {
 // Check online status
 
 window.addEventListener("offline", function() {
-    this.document.body.style.backgroundColor = "#000";
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#000');
-    this.alert("Offline")
+    this.document.body.style.backgroundColor = "#fff";
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
+    this.document.body.innerText = "Offline"
 });
 
 window.addEventListener("online", function() {
-    this.alert("Online. Please reload.")
-})
+    this.document.body.style.backgroundColor = "#fff";
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
+    this.document.body.innerText = "Online. Please reload."
+});
 
 changeBackground();
 
