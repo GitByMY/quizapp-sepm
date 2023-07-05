@@ -233,7 +233,10 @@ function returnHome() {
     quizSelection.selectedIndex = quizSelection.disabled;
 }
 
-// Check online status
+/*
+If offline while app is open, changes background color and theme color to white and displays text "Offline".
+When online again, displays message saying to reopen the app.
+*/
 
 window.addEventListener("offline", function() {
     this.document.body.style.backgroundColor = "#fff";
@@ -244,7 +247,7 @@ window.addEventListener("offline", function() {
 window.addEventListener("online", function() {
     this.document.body.style.backgroundColor = "#fff";
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
-    this.document.body.innerText = "Online. Please reload."
+    this.document.body.innerText = "Online. Please reopen the app."
 });
 
 changeBackground();
@@ -253,6 +256,6 @@ nextButton.addEventListener("click", () => {
     if (currentQuestionIndex < questions.length) {
         handleNextButton(questions);
     } else {
-        startQuiz(selectedIndex=getSelectedIndex());  // resume here
+        startQuiz(selectedIndex=getSelectedIndex());
     }
 });
