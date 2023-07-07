@@ -167,8 +167,30 @@ function startQuiz(selectedIndex) {
     progressBar.style.width = `${progressPercent}%`;
     score = 0;
     nextButton.innerHTML = "Next";
+    randomizeAnswers(questions);
     showQuestion(questions);
     changeBackground();
+}
+
+function randomizeAnswers(questions) {
+    for (question of questions) {
+        let randIndx1 = Math.floor(Math.random()*question.answers.length);
+        let randIndx2 = Math.floor(Math.random()*question.answers.length);
+        while (randIndx2 === randIndx1) {
+            randIndx2 = Math.floor(Math.random()*question.answers.length);
+        }
+        let randIndx3 = Math.floor(Math.random()*question.answers.length);
+        while (randIndx3 === randIndx1 || randIndx3 === randIndx2) {
+            randIndx3 = Math.floor(Math.random()*question.answers.length);
+        }
+        let randIndx4 =Math.floor(Math.random()*question.answers.length);
+        while (randIndx4 === randIndx1 || randIndx4 === randIndx2 || randIndx4 === randIndx3) {
+            randIndx4 = Math.floor(Math.random()*question.answers.length);
+        }
+        [question.answers[randIndx1], question.answers[randIndx2]] = [question.answers[randIndx2], question.answers[randIndx1]];
+        [question.answers[randIndx3], question.answers[randIndx4]] = [question.answers[randIndx4], question.answers[randIndx3]];
+    }
+    console.log(question.answers);
 }
 
 function showQuestion(questions) {
@@ -176,7 +198,6 @@ function showQuestion(questions) {
     let currentQuestion = questions[currentQuestionIndex];
     let questionNumber = currentQuestionIndex + 1;
     questionElement.innerHTML = questionNumber + ". " + currentQuestion.question;
-
     currentQuestion.answers.forEach(answer => {
         const button = document.createElement("button");
         button.innerHTML = answer.text;
