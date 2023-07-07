@@ -14,7 +14,7 @@ Below are the features that I implemented myself:
 ### How to Install on Mobile Devices
 **iOS**
 1. On your mobile device, go to the live site: [Inquizitive](https://inquizitive-kyria.netlify.app/)
-2. Click the share button:
+2. Click the share button
 3. Click "Add to Home Screen"
 4. Click "Add"
 
