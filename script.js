@@ -103,13 +103,17 @@ const hex = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
 const app = document.getElementById("app");
 const main = document.getElementById("main");
 const quizSelection = document.getElementById("quiz-select");
+const startQuizBtn = document.querySelector("#btn");
 const questionElement = document.getElementById("question");
 const answerButtons = document.getElementById("answer-buttons");
 const nextButton = document.getElementById("next-btn");
-const startQuizBtn = document.querySelector("#btn");
+const progressBar = document.querySelector(".progress-bar");
+const progressText = document.getElementById("progress-text");
 let quizHeader = document.getElementById("quiz-header");
 let questions = null;
 let currentQuestionIndex = 0;
+let completedQuestions = 0;
+let progressPercent = 0;
 let score = 0;
 
 
@@ -131,7 +135,6 @@ function changeBackground() {
 // Select quiz
 
 function getSelectedIndex() {
-
     if (quizSelection.selectedIndex == quizSelection.disabled) {
         startQuizBtn = startQuizBtn.disabled
     } else {
@@ -158,6 +161,10 @@ function startQuiz(selectedIndex) {
     quizHeader.innerHTML = quizSelection[selectedIndex].text;
     questions = getQuestions(selectedIndex);
     currentQuestionIndex = 0;
+    completedQuestions = 0;
+    progressText.innerText = `${completedQuestions}/${questions.length}`;
+    progressPercent = 0;
+    progressBar.style.width = `${progressPercent}%`;
     score = 0;
     nextButton.innerHTML = "Next";
     showQuestion(questions);
@@ -254,6 +261,12 @@ changeBackground();
 
 nextButton.addEventListener("click", () => {
     if (currentQuestionIndex < questions.length) {
+        completedQuestions++;
+        if (completedQuestions <= questions.length) {
+            progressText.innerText = `${completedQuestions}/${questions.length}`;
+        }
+        progressPercent += 20;
+        progressBar.style.width = `${progressPercent}%`;
         handleNextButton(questions);
     } else {
         startQuiz(selectedIndex=getSelectedIndex());

@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+:root {
+    --progress: 0%;
+}
+
 /* HOME */
 
 main {
@@ -174,5 +178,28 @@ i {
 
 i:hover {
     cursor: pointer;
+    color: #000;
+}
+
+/* Progress bar */
+
+.container {
+    position: relative;
+    top: 0;
+    background-color: #fff;
+    height: 25px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    position: absolute;
+    background-color: #000;
+    height: 2px;
+    transition: 1s;
+}
+
+#progress-text {
+    font-family: 'Roboto Mono', monospace;
     color: #000;
 }
