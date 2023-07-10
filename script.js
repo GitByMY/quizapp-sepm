@@ -100,16 +100,16 @@ let questions2 = [
 // Variables
 
 const hex = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
-const app = document.getElementById("app");
-const main = document.getElementById("main");
-const quizSelection = document.getElementById("quiz-select");
-const startQuizBtn = document.querySelector("#btn");
-const questionElement = document.getElementById("question");
-const answerButtons = document.getElementById("answer-buttons");
-const nextButton = document.getElementById("next-btn");
-const progressBar = document.querySelector(".progress-bar");
-const progressText = document.getElementById("progress-text");
-let quizHeader = document.getElementById("quiz-header");
+const app = document.getElementById('app');
+const main = document.getElementById('main');
+const quizSelection = document.getElementById('quiz-select');
+const startQuizBtn = document.querySelector('#btn');
+const questionElement = document.getElementById('question');
+const answerButtons = document.getElementById('answer-buttons');
+const nextButton = document.getElementById('next-btn');
+const progressBar = document.querySelector('.progress-bar');
+const progressText = document.getElementById('progress-text');
+let quizHeader = document.getElementById('quiz-header');
 let questions = null;
 let currentQuestionIndex = 0;
 let completedQuestions = 0;
@@ -143,7 +143,7 @@ function getSelectedIndex() {
 };
 
 function getQuestions(selectedIndex) {
-    let questions = eval("questions"+selectedIndex).map(question => {
+    let questions = eval('questions'+selectedIndex).map(question => {
         let quizQuestions = {
             question: question.question,
             answers: question.answers
@@ -156,8 +156,8 @@ function getQuestions(selectedIndex) {
 // Start quiz
 
 function startQuiz(selectedIndex) {
-    main.style.display = "none";
-    app.style.display = "block";
+    main.style.display = 'none';
+    app.style.display = 'block';
     quizHeader.innerHTML = quizSelection[selectedIndex].text;
     questions = getQuestions(selectedIndex);
     currentQuestionIndex = 0;
@@ -166,7 +166,7 @@ function startQuiz(selectedIndex) {
     progressPercent = 0;
     progressBar.style.width = `${progressPercent}%`;
     score = 0;
-    nextButton.innerHTML = "Next";
+    nextButton.innerHTML = 'Next';
     randomizeAnswers(questions);
     showQuestion(questions);
     changeBackground();
@@ -190,28 +190,27 @@ function randomizeAnswers(questions) {
         [question.answers[randIndx1], question.answers[randIndx2]] = [question.answers[randIndx2], question.answers[randIndx1]];
         [question.answers[randIndx3], question.answers[randIndx4]] = [question.answers[randIndx4], question.answers[randIndx3]];
     }
-    console.log(question.answers);
 }
 
 function showQuestion(questions) {
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
     let questionNumber = currentQuestionIndex + 1;
-    questionElement.innerHTML = questionNumber + ". " + currentQuestion.question;
+    questionElement.innerHTML = questionNumber + '. ' + currentQuestion.question;
     currentQuestion.answers.forEach(answer => {
-        const button = document.createElement("button");
+        const button = document.createElement('button');
         button.innerHTML = answer.text;
-        button.classList.add("btn");
+        button.classList.add('btn');
         answerButtons.appendChild(button);
         if (answer.correct) {
             button.dataset.correct = answer.correct;
         }
-        button.addEventListener("click", selectAnswer);
+        button.addEventListener('click', selectAnswer);
     });
 }
 
 function resetState() {
-    nextButton.style.display = "none";
+    nextButton.style.display = 'none';
     while (answerButtons.firstChild) {
         answerButtons.removeChild(answerButtons.firstChild);
     }
@@ -219,27 +218,27 @@ function resetState() {
 
 function selectAnswer(e) {
     const selectedBtn = e.target;
-    const isCorrect = selectedBtn.dataset.correct === "true";
+    const isCorrect = selectedBtn.dataset.correct === 'true';
     if (isCorrect) {
-        selectedBtn.classList.add("correct");
+        selectedBtn.classList.add('correct');
         score++;
     } else {
-        selectedBtn.classList.add("incorrect");
+        selectedBtn.classList.add('incorrect');
     }
     Array.from(answerButtons.children).forEach(button => {
-        if (button.dataset.correct === "true") {
-            button.classList.add("correct");
+        if (button.dataset.correct === 'true') {
+            button.classList.add('correct');
         }
         button.disabled = true;
     });
-    nextButton.style.display = "block";
+    nextButton.style.display = 'block';
 }
 
 function showScore(questions) {
     resetState();
     questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
     nextButton.innerHTML = "Play Again";
-    nextButton.style.display = "block";
+    nextButton.style.display = 'block';
 }
 
 function handleNextButton(questions) {
@@ -254,10 +253,10 @@ function handleNextButton(questions) {
 // Return to home screen
 
 function returnHome() {
-    app.style.display = "none";
+    app.style.display = 'none';
     changeBackground();
-    main.style.display = "block";
-    const quizSelection = document.getElementById("quiz-select");
+    main.style.display = 'block';
+    const quizSelection = document.getElementById('quiz-select');
     quizSelection.selectedIndex = quizSelection.disabled;
 }
 
@@ -266,21 +265,21 @@ If offline while app is open, changes background color and theme color to white 
 When online again, displays message saying to reopen the app.
 */
 
-window.addEventListener("offline", function() {
-    this.document.body.style.backgroundColor = "#fff";
+window.addEventListener('offline', function() {
+    this.document.body.style.backgroundColor = '#fff';
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
     this.document.body.innerText = "Offline"
 });
 
-window.addEventListener("online", function() {
-    this.document.body.style.backgroundColor = "#fff";
+window.addEventListener('online', function() {
+    this.document.body.style.backgroundColor = '#fff';
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
     this.document.body.innerText = "Online. Please reopen the app."
 });
 
 changeBackground();
 
-nextButton.addEventListener("click", () => {
+nextButton.addEventListener('click', () => {
     if (currentQuestionIndex < questions.length) {
         completedQuestions++;
         if (completedQuestions <= questions.length) {
