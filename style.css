@@ -50,7 +50,7 @@ select option:disabled {
 
 /* Start quiz button */
 
-#btn {
+#start-btn {
     font-family: 'Comfortaa', sans-serif;
     appearance: none;
     background-color: transparent;
@@ -77,17 +77,17 @@ select option:disabled {
     will-change: transform;
 }
 
-#btn:disabled {
+#start-btn:disabled {
     pointer-events: none;
 }
 
-#btn:hover {
+#start-btn:hover {
     background-color: #000;
     box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
     transform: translateY(-2px);
 }
 
-#btn:active {
+#start-btn:active {
     box-shadow: none;
     transform: translateY(0);
 }
