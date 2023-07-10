@@ -154,7 +154,7 @@ select option:disabled {
     width: 150px;
     border: 0;
     padding: 10px;
-    margin: 20px auto;
+    margin: 20px auto 0;
     border-radius: 4px;
     cursor: pointer;
     display: none;
@@ -188,7 +188,6 @@ i:hover {
 .container {
     position: relative;
     top: 0;
-    background-color: #fff;
     height: 25px;
     width: 100%;
     margin-bottom: 20px;
