@@ -1,102 +1,3 @@
-// Quiz questions
-
-let questions1 = [
-    {
-        question: "How many ASCII characters are there?",
-        answers: [
-            {text: "140", correct: false},
-            {text: "75", correct: false},
-            {text: "209", correct: false},
-            {text: "128", correct: true},
-        ]
-    },
-    {
-        question: "Unicode, the standard for character encoding used to represent multilingual text as binary, is the successor of what US encoding standard?",
-        answers: [
-            {text: "UX", correct: false},
-            {text: "ASCII", correct: true},
-            {text: "DNS", correct: false},
-            {text: "AMD", correct: false},
-        ]
-    },
-    {
-        question: "In Big O notation, what is the time complexity of a binary search algorithm?",
-        answers: [
-            {text: "O(1)", correct: false},
-            {text: "O(log n)", correct: true},
-            {text: "O(n)", correct: false},
-            {text: "O(n * log n)", correct: false},
-        ]
-    },
-    {
-        question: "What company providing hosting for software development and distributed version control familiar to computer programmers is known for its iconic Octocat (part cat, part octopus) logo?",
-        answers: [
-            {text: "GitHub", correct: true},
-            {text: "HubSpot", correct: false},
-            {text: "React", correct: false},
-            {text: "Tailwind", correct: false},
-        ]
-    },
-    {
-        question: "What British woman is considered to have written the first ever piece of computer software, developing an algorithm for Charles Babbage's theoretical Analytical Engine in the 1840s?",
-        answers: [
-            {text: "Margaret Hamilton", correct: false},
-            {text: "Grace Hopper", correct: false},
-            {text: "Ada Lovelace", correct: true},
-            {text: "Joan Clarke", correct: false},
-        ]
-    }
-];
-
-let questions2 = [
-    {
-        question: "When did 4th of July celebrations first use fireworks?",
-        answers: [
-            {text: "1777", correct: true},
-            {text: "1799", correct: false},
-            {text: "1873", correct: false},
-            {text: "1800", correct: false},
-        ]
-    },
-    {
-        question: "How many signatures are on the declaration of independence?",
-        answers: [
-            {text: "50", correct: false},
-            {text: "49", correct: false},
-            {text: "13", correct: false},
-            {text: "56", correct: true},
-        ]
-    },
-    {
-        question: "What year did \"The Star-Spangled Banner\" become the national anthem?",
-        answers: [
-            {text: "1900", correct: false},
-            {text: "1922", correct: false},
-            {text: "1931", correct: true},
-            {text: "1870", correct: false},
-        ]
-    },
-    {
-        question: "How many presidents have died in office?",
-        answers: [
-            {text: "8", correct: true},
-            {text: "10", correct: false},
-            {text: "5", correct: false},
-            {text: "9", correct: false},
-        ]
-    },
-    {
-        question: "After which battle did General Robert E. Lee surrender to General Ulysses S. Grant, leading to the end of the Civil War?",
-        answers: [
-            {text: "Battle of Gettysburg", correct: false},
-            {text: "Battle of Appomattox Court House", correct: true},
-            {text: "Battle of Saratoga", correct: false},
-            {text: "Siege of Charleston", correct: false},
-        ]
-    }
-]
-
-
 // Variables
 
 const hex = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
@@ -132,7 +33,37 @@ function changeBackground() {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hexColor);
 };
 
-// Select quiz
+// Get quiz
+
+async function getAPI(url) {
+    return await fetch(url).then((response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error("Error");
+    }, rejected => console.log(rejected)
+    ).then(jsonResponse => {
+        var formattedQuiz = formatData(jsonResponse);
+        return formattedQuiz;
+    });
+}
+
+function formatData(jsonResponse) {
+    let formattedQuiz = [];
+    let quiz = jsonResponse.results;
+    for (questionObj of quiz) {
+        formattedQuiz.push({
+            question: questionObj.question,
+            answers: [
+                {text: questionObj.correct_answer, correct: true},
+                {text: questionObj.incorrect_answers[0], correct: false},
+                {text: questionObj.incorrect_answers[1], correct: false},
+                {text: questionObj.incorrect_answers[2], correct: false}
+            ]
+        });
+    }
+    return formattedQuiz;
+}
 
 function getSelectedIndex() {
     if (quizSelection.selectedIndex == quizSelection.disabled) {
@@ -142,24 +73,23 @@ function getSelectedIndex() {
     }
 };
 
-function getQuestions(selectedIndex) {
-    let questions = eval('questions'+selectedIndex).map(question => {
-        let quizQuestions = {
-            question: question.question,
-            answers: question.answers
-        };
-        return quizQuestions;
-    });
-    return questions;
+async function getQuiz(selectedIndex) {
+    let url = '';
+    if (selectedIndex === 1) {
+        url = 'https://opentdb.com/api.php?amount=5&category=18&type=multiple';
+    } else {
+        url = 'https://opentdb.com/api.php?amount=5&category=23&type=multiple';
+    }
+    const resolved = await getAPI(url);
+    quiz = resolved;
+    return quiz;
 }
 
 // Start quiz
 
-function startQuiz(selectedIndex) {
-    main.style.display = 'none';
-    app.style.display = 'block';
+async function startQuiz(selectedIndex) {
     quizHeader.innerHTML = quizSelection[selectedIndex].text;
-    questions = getQuestions(selectedIndex);
+    questions = await getQuiz(selectedIndex);
     currentQuestionIndex = 0;
     completedQuestions = 0;
     progressText.innerText = `${completedQuestions}/${questions.length}`;
@@ -167,9 +97,11 @@ function startQuiz(selectedIndex) {
     progressBar.style.width = `${progressPercent}%`;
     score = 0;
     nextButton.innerHTML = 'Next';
+    main.style.display = 'none';
+    changeBackground();
+    app.style.display = 'block';
     randomizeAnswers(questions);
     showQuestion(questions);
-    changeBackground();
 }
 
 function randomizeAnswers(questions) {
