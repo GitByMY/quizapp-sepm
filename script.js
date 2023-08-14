@@ -33,32 +33,33 @@ function changeBackground() {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hexColor);
 };
 
-// Get quiz
+// Get quiz data
 
-async function getAPI(url) {
-    return await fetch(url).then((response) => {
+async function getData(url) {
+    try {
+        const response = await fetch(url);
         if (response.ok) {
-            return response.json();
+            const jsonResponse = await response.json();
+            const formattedQuiz = formatData(jsonResponse);
+            return formattedQuiz;
+        } else {
+            throw new Error("Request failed");
         }
-        throw new Error("Error");
-    }, rejected => console.log(rejected)
-    ).then(jsonResponse => {
-        var formattedQuiz = formatData(jsonResponse);
-        return formattedQuiz;
-    });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 function formatData(jsonResponse) {
     let formattedQuiz = [];
-    let quiz = jsonResponse.results;
-    for (questionObj of quiz) {
+    for (obj of jsonResponse.results) {
         formattedQuiz.push({
-            question: questionObj.question,
+            question: obj.question,
             answers: [
-                {text: questionObj.correct_answer, correct: true},
-                {text: questionObj.incorrect_answers[0], correct: false},
-                {text: questionObj.incorrect_answers[1], correct: false},
-                {text: questionObj.incorrect_answers[2], correct: false}
+                {text: obj.correct_answer, correct: true},
+                {text: obj.incorrect_answers[0], correct: false},
+                {text: obj.incorrect_answers[1], correct: false},
+                {text: obj.incorrect_answers[2], correct: false}
             ]
         });
     }
@@ -80,7 +81,7 @@ async function getQuiz(selectedIndex) {
     } else {
         url = 'https://opentdb.com/api.php?amount=5&category=23&type=multiple';
     }
-    const resolved = await getAPI(url);
+    const resolved = await getData(url);
     quiz = resolved;
     return quiz;
 }
