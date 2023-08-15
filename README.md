@@ -7,16 +7,8 @@ Inquizitive is a quiz web app I built to help me learn HTML, CSS, and JavaScript
 Below are the features that I implemented myself:
 + Feels and can be used like a native mobile app
 + A home page separate from the quiz game that can also be returned to at any point during the quiz game
-+ Multiple quiz subjects (using Fetch API and Open Trivia DB) and the ability to select and take a specific quiz
++ Multiple quiz subjects (using Open Trivia DB) and the ability to select and take a specific quiz
 + A background that changes color each time the home page is displayed and each time the quiz page is displayed
-
-## How to Use
-### How to Install on Mobile Devices
-**iOS**
-1. On your mobile device, go to the live site: [Inquizitive](https://inquizitive-kyria.netlify.app/)
-2. Click the share button
-3. Click "Add to Home Screen"
-4. Click "Add"
 
 ## Technologies
 + HTML
