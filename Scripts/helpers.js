@@ -1,6 +1,5 @@
-// Variables
+// Global variables
 
-const hex = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
 const app = document.getElementById('app');
 const main = document.getElementById('main');
 const quizSelection = document.getElementById('quiz-select');
@@ -17,14 +16,14 @@ let completedQuestions = 0;
 let progressPercent = 0;
 let score = 0;
 
-
 // Change background color
 
 function getRandomNumber() {
-    return Math.floor(Math.random() * hex.length);
+    return Math.floor(Math.random() * 16);
 }
 
 function changeBackground() {
+    const hex = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
     let hexColor = '#';
     for (let i = 0; i < 6; i++) {
         hexColor += hex[getRandomNumber()];
@@ -33,23 +32,16 @@ function changeBackground() {
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', hexColor);
 };
 
-// Get quiz data
-
-async function getData(url) {
-    try {
-        const response = await fetch(url);
-        if (response.ok) {
-            const jsonResponse = await response.json();
-            const formattedQuiz = formatData(jsonResponse);
-            return formattedQuiz;
-        } else {
-            throw new Error("Request failed");
-        }
-    } catch (err) {
-        console.log(err);
+// Get selected quiz from user
+function getSelectedIndex() {
+    if (quizSelection.selectedIndex == quizSelection.disabled) {
+        startQuizBtn = startQuizBtn.disabled
+    } else {
+        return quizSelection.selectedIndex
     }
-}
+};
 
+// Format data from getData()
 function formatData(jsonResponse) {
     let formattedQuiz = [];
     for (obj of jsonResponse.results) {
@@ -66,14 +58,23 @@ function formatData(jsonResponse) {
     return formattedQuiz;
 }
 
-function getSelectedIndex() {
-    if (quizSelection.selectedIndex == quizSelection.disabled) {
-        startQuizBtn = startQuizBtn.disabled
-    } else {
-        return quizSelection.selectedIndex
+// Fetch API
+async function getData(url) {
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            const jsonResponse = await response.json();
+            const formattedQuiz = formatData(jsonResponse);
+            return formattedQuiz;
+        } else {
+            throw new Error("Request failed");
+        }
+    } catch (err) {
+        console.log(err);
     }
-};
+}
 
+// Get selected quiz from Open Trivia DB
 async function getQuiz(selectedIndex) {
     let url = '';
     if (selectedIndex === 1) {
@@ -86,25 +87,7 @@ async function getQuiz(selectedIndex) {
     return quiz;
 }
 
-// Start quiz
-
-async function startQuiz(selectedIndex) {
-    quizHeader.innerHTML = quizSelection[selectedIndex].text;
-    questions = await getQuiz(selectedIndex);
-    currentQuestionIndex = 0;
-    completedQuestions = 0;
-    progressText.innerText = `${completedQuestions}/${questions.length}`;
-    progressPercent = 0;
-    progressBar.style.width = `${progressPercent}%`;
-    score = 0;
-    nextButton.innerHTML = 'Next';
-    main.style.display = 'none';
-    changeBackground();
-    app.style.display = 'block';
-    randomizeAnswers(questions);
-    showQuestion(questions);
-}
-
+// Randomize answers for each question
 function randomizeAnswers(questions) {
     for (question of questions) {
         let randIndx1 = Math.floor(Math.random()*question.answers.length);
@@ -125,6 +108,7 @@ function randomizeAnswers(questions) {
     }
 }
 
+// Display each question
 function showQuestion(questions) {
     resetState();
     let currentQuestion = questions[currentQuestionIndex];
@@ -142,6 +126,7 @@ function showQuestion(questions) {
     });
 }
 
+// Reset question state
 function resetState() {
     nextButton.style.display = 'none';
     while (answerButtons.firstChild) {
@@ -149,6 +134,7 @@ function resetState() {
     }
 }
 
+// User selects answer
 function selectAnswer(e) {
     const selectedBtn = e.target;
     const isCorrect = selectedBtn.dataset.correct === 'true';
@@ -167,6 +153,7 @@ function selectAnswer(e) {
     nextButton.style.display = 'block';
 }
 
+// Shows score at the end
 function showScore(questions) {
     resetState();
     questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
@@ -174,6 +161,7 @@ function showScore(questions) {
     nextButton.style.display = 'block';
 }
 
+// Handles the next button - displays question or score if quiz is done
 function handleNextButton(questions) {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
@@ -183,45 +171,10 @@ function handleNextButton(questions) {
     }
 }
 
-// Return to home screen
-
+// Return home
 function returnHome() {
     app.style.display = 'none';
     changeBackground();
     main.style.display = 'block';
-    const quizSelection = document.getElementById('quiz-select');
     quizSelection.selectedIndex = quizSelection.disabled;
 }
-
-/*
-If offline while app is open, changes background color and theme color to white and displays text "Offline".
-When online again, displays message saying to reopen the app.
-*/
-
-window.addEventListener('offline', function() {
-    this.document.body.style.backgroundColor = '#fff';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
-    this.document.body.innerText = "Offline"
-});
-
-window.addEventListener('online', function() {
-    this.document.body.style.backgroundColor = '#fff';
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#fff');
-    this.document.body.innerText = "Online. Please reopen the app."
-});
-
-changeBackground();
-
-nextButton.addEventListener('click', () => {
-    if (currentQuestionIndex < questions.length) {
-        completedQuestions++;
-        if (completedQuestions <= questions.length) {
-            progressText.innerText = `${completedQuestions}/${questions.length}`;
-        }
-        progressPercent += 20;
-        progressBar.style.width = `${progressPercent}%`;
-        handleNextButton(questions);
-    } else {
-        startQuiz(selectedIndex=getSelectedIndex());
-    }
-});
