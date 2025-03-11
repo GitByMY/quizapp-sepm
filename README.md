@@ -1,7 +1,7 @@
 # QUIZRECRUIT
 
 ## Description
-Inquizitive is a quiz web app I built to help me learn HTML, CSS, and JavaScript. I started with [a tutorial from the YouTube channel EasyTutorials](https://youtu.be/PBcqGxrr9g8) and wanted to add some of my own ideas to it to make the app even more fun for me to use as well as create!
+QUIZRECRUIT is a quiz web app I built to help me learn HTML, CSS, and JavaScript. I started with [a tutorial from the YouTube channel EasyTutorials](https://youtu.be/PBcqGxrr9g8) and wanted to add some of my own ideas to it to make the app even more fun for me to use as well as create!
 
 ## Features
 Below are the features that I implemented myself:
